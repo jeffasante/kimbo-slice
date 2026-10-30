@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "note": "Platform limits change without notice. These values come from the product specification and have not been verified against official platform documentation. Edit this file to update them; no rebuild is needed.",
+  "presets": [
+    {
+      "id": "whatsapp-status",
+      "label": "WhatsApp Status",
+      "maxSeconds": 90,
+      "safetyMarginSeconds": 1.0,
+      "preferredContainer": "mp4",
+      "preferredVideoCodec": "h264",
+      "maxWidth": null,
+      "maxHeight": null,
+      "verified": false,
+      "source": "Kimbo Slice product specification",
+      "lastVerified": null
+    },
+    {
+      "id": "instagram-stories",
+      "label": "Instagram Stories",
+      "maxSeconds": 60,
+      "safetyMarginSeconds": 1.0,
+      "preferredContainer": "mp4",
+      "preferredVideoCodec": "h264",
+      "maxWidth": null,
+      "maxHeight": null,
+      "verified": false,
+      "source": "Kimbo Slice product specification",
+      "lastVerified": null
+    },
+    {
+      "id": "snapchat",
+      "label": "Snapchat",
+      "maxSeconds": 10,
+      "safetyMarginSeconds": 0,
+      "preferredContainer": "mp4",
+      "preferredVideoCodec": "h264",
+      "maxWidth": null,
+      "maxHeight": null,
+      "minSeconds": 5,
+      "mergeMaxSeconds": 15,
+      "minWidth": 540,
+      "minHeight": 960,
+      "verified": false,
+      "source": "Product choice: 10 s Snap-style clips. Snapchat's web help (checked 2026-10-30) allows 5 to 60 s per video: https://help.snapchat.com/hc/en-gb/articles/7012310003348-How-to-Post-a-Snap-to-My-Story-from-the-Web",
+      "lastVerified": null
+    },
+    {
+      "id": "snapchat-15",
+      "label": "Snapchat (longer clips)",
+      "maxSeconds": 15,
+      "safetyMarginSeconds": 0,
+      "preferredContainer": "mp4",
+      "preferredVideoCodec": "h264",
+      "maxWidth": null,
+      "maxHeight": null,
+      "minSeconds": 5,
+      "mergeMaxSeconds": 15,
+      "minWidth": 540,
+      "minHeight": 960,
+      "verified": false,
+      "source": "Product choice: 15 s clips. Snapchat's web help (checked 2026-10-30) allows 5 to 60 s per video: https://help.snapchat.com/hc/en-gb/articles/7012310003348-How-to-Post-a-Snap-to-My-Story-from-the-Web",
+      "lastVerified": null
+    }
+  ]
+}

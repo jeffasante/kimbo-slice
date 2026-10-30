@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self'; img-src 'self' blob: data:; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Kimbo Slice</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <script type="module" crossorigin src="./assets/index-CeFATLCZ.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-dxDR-I3I.css">
+</head>
+<body>
+  <a class="skip" href="#main" data-i18n="app.skip"></a>
+  <header class="top">
+    <h1 data-i18n="app.title"></h1>
+    <p class="tagline" data-i18n="app.tagline"></p>
+    <p class="privacy" id="privacy"><span aria-hidden="true">●</span> <span data-i18n="app.privacy"></span></p>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div id="banner" class="banner" role="status" hidden></div>
+
+    <!-- 1. File -->
+    <section class="step" id="step-file" aria-labelledby="h-file">
+      <h2 id="h-file" data-i18n="file.legend"></h2>
+      <div class="drop" id="drop">
+        <input type="file" id="file" class="visually-hidden" accept="video/mp4,video/quicktime,.mp4,.m4v,.mov">
+        <label for="file" class="button primary" data-i18n="file.choose"></label>
+        <span class="muted" data-i18n="file.drop"></span>
+      </div>
+      <p class="muted small" data-i18n="file.accepted"></p>
+      <div id="file-info" class="file-info" hidden>
+        <p id="file-summary" class="strong"></p>
+        <p id="file-details" class="muted small"></p>
+      </div>
+      <p id="inspecting" class="muted" role="status" hidden data-i18n="file.inspecting"></p>
+    </section>
+
+    <!-- Settings (READY) -->
+    <form id="settings" class="settings" hidden novalidate>
+      <fieldset class="step" id="presets">
+        <legend data-i18n="preset.legend"></legend>
+        <div id="preset-list" class="choices"></div>
+        <div class="custom" id="custom-box" hidden>
+          <label for="custom-seconds" data-i18n="preset.customLabel"></label>
+          <input id="custom-seconds" type="number" inputmode="numeric" min="1" max="3600" step="1" value="30" aria-describedby="custom-error">
+          <div class="shortcuts" role="group" aria-labelledby="shortcut-label">
+            <span id="shortcut-label" class="visually-hidden" data-i18n="preset.customShortcuts"></span>
+            <span id="shortcuts"></span>
+          </div>
+          <p id="custom-error" class="error-text" hidden></p>
+        </div>
+        <p id="preset-meta" class="muted small"></p>
+        <p id="preset-target" class="small"></p>
+        <p class="note small" data-i18n="preset.note"></p>
+      </fieldset>
+
+      <fieldset class="step" id="modes">
+        <legend data-i18n="mode.legend"></legend>
+        <div class="choices stacked">
+          <label class="choice">
+            <input type="radio" name="mode" value="lossless" checked aria-describedby="mode-lossless-help">
+            <span><span class="strong" data-i18n="mode.lossless"></span>
+              <span class="muted small block" id="mode-lossless-help" data-i18n="mode.losslessHelp"></span></span>
+          </label>
+          <label class="choice">
+            <input type="radio" name="mode" value="exact" aria-describedby="mode-exact-help">
+            <span><span class="strong" data-i18n="mode.exact"></span>
+              <span class="muted small block" id="mode-exact-help" data-i18n="mode.exactHelp"></span></span>
+          </label>
+        </div>
+        <p id="exact-unavailable" class="muted small" hidden></p>
+      </fieldset>
+
+      <section class="step" aria-labelledby="h-warn" id="warnings-box" hidden>
+        <h2 id="h-warn" data-i18n="warn.heading"></h2>
+        <ul id="warnings" class="warnings"></ul>
+      </section>
+
+      <section class="step" aria-labelledby="h-plan">
+        <h2 id="h-plan" data-i18n="plan.legend"></h2>
+        <p id="plan-summary" class="strong" aria-live="polite"></p>
+        <ol id="plan" class="plan"></ol>
+        <div id="plan-error" class="inline-error" role="alert" hidden></div>
+        <button type="submit" class="button primary big" id="start" data-i18n="plan.start"></button>
+      </section>
+    </form>
+
+    <!-- PROCESSING / VALIDATING -->
+    <section id="progress-box" class="step" aria-labelledby="h-progress" hidden>
+      <h2 id="h-progress" data-i18n="progress.legend"></h2>
+      <p id="progress-text" role="status" aria-live="polite"></p>
+      <progress id="progress" max="1" value="0" aria-labelledby="progress-text"></progress>
+      <p id="progress-detail" class="muted small"></p>
+      <p class="muted small" data-i18n="progress.keepOpen"></p>
+      <button type="button" class="button" id="cancel" data-i18n="progress.cancel"></button>
+    </section>
+
+    <!-- FAILED / CANCELLED -->
+    <section id="error-box" class="step error" aria-labelledby="h-error" tabindex="-1" hidden>
+      <h2 id="h-error"></h2>
+      <p id="error-what" class="strong"></p>
+      <p id="error-completed"></p>
+      <p id="error-retry" class="small"></p>
+      <p id="error-next"></p>
+      <details id="error-tech">
+        <summary data-i18n="error.details"></summary>
+        <pre id="error-detail"></pre>
+      </details>
+      <div class="actions">
+        <button type="button" class="button primary" id="retry"></button>
+        <button type="button" class="button" id="error-edit" data-i18n="done.again"></button>
+        <button type="button" class="button" id="error-new" data-i18n="done.new"></button>
+      </div>
+    </section>
+
+    <!-- COMPLETED (and partial results after FAILED/CANCELLED) -->
+    <section id="results" class="step" aria-labelledby="h-results" tabindex="-1" hidden>
+      <h2 id="h-results" data-i18n="done.heading"></h2>
+      <p id="done-stats" class="muted small"></p>
+      <h3 data-i18n="done.order"></h3>
+      <ol id="clips" class="clips"></ol>
+      <div id="share-flow" class="share-flow" hidden>
+        <p id="share-hint" class="muted small"></p>
+        <div class="actions">
+          <button type="button" class="button primary" id="share-next"></button>
+          <button type="button" class="button" id="share-all" data-i18n="done.shareAll" hidden></button>
+        </div>
+      </div>
+      <p id="share-note" class="muted small" role="status"></p>
+      <div class="actions" id="done-actions">
+        <button type="button" class="button" id="zip" data-i18n="done.zip"></button>
+        <button type="button" class="button" id="again" data-i18n="done.again"></button>
+        <button type="button" class="button" id="new" data-i18n="done.new"></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot muted small">
+    <p><span data-i18n="app.privacy"></span> <span id="version"></span></p>
+  </footer>
+</body>
+</html>
